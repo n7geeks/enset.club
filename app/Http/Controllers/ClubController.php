@@ -16,7 +16,7 @@ class ClubController extends Controller
     public function index()
     {
         $c=Club::paginate(10);
-        return ClubResource::collection($d);
+        return ClubResource::collection($c);
     }
 
 
@@ -28,14 +28,21 @@ class ClubController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $request->validate([
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $imageName = time().'.'.$request->logo->extension();  
         $club=new Club();
         $club->name=$request->input('name');
-        $club->logo=$request->input('logo');
+        $club->logo=$imageName;
         $club->creation_date=$request->input('creation_date');
         $club->email=$request->input('email');
         $club->description=$request->input('description');
-        $club->save();
-        return "inserted";
+
+        if($club->save() && request()->logo->move(public_path('images/logos'), $imageName))
+            return "inserted";
+        return "error";
     }
 
     /**

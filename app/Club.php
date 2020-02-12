@@ -9,4 +9,9 @@ class Club extends Model
     protected $fillable = [
         'name', 'email', 'creation_date','logo','description',
     ];
+
+
+    public function members(){
+        return $this->hasMany('App\Users');
+    }
 }
