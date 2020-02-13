@@ -85,6 +85,12 @@ class ClubController extends Controller
      */
     public function destroy($id)
     {
-        
+        $club=Club::find($id);
+        if(!$club==null && $club->delete()){
+
+            return "deleted";
+        }else {
+            return "doesnt exist";
+        }
     }
 }

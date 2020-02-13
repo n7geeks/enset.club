@@ -19,6 +19,7 @@ class CreateClubTable extends Migration
             $table->string('email')->unique();
             $table->date('creation_date');
             $table->string('logo');
+            $table->text('description');
             $table->timestamps();
         });
     }

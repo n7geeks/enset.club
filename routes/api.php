@@ -18,8 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('clubs','ClubController@index');
-Route::post('clubs','ClubController@store');
-Route::get('clubs/{id}','ClubController@show');
-Route::put('clubs/{id}','ClubController@update');
+// Route::get('clubs','ClubController@index');
+// Route::post('clubs','ClubController@store');
+// Route::get('clubs/{id}','ClubController@show');
+// Route::put('clubs/{id}','ClubController@update');
 
+Route::resource('clubs', 'ClubController');
