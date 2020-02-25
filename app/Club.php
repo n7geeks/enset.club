@@ -14,4 +14,8 @@ class Club extends Model
     public function members(){
         return $this->hasMany('App\Users');
     }
+
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
 }
