@@ -11,6 +11,14 @@
 |
 */
 
+
+
+Route::domain('{subdomain}.' . env('APP_DOMAIN'))->group(function () {
+    Route::get('/', function ($subdomain) {
+        return $subdomain;
+    });
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
