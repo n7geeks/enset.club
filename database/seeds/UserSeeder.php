@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use RomegaDigital\Multitenancy\Models\Tenant;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -25,9 +26,16 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
             ], [
-                'first_name' => 'User',
-                'last_name' => 'User',
-                'email' => 'user@gmail.com',
+                'first_name' => 'N7geeks',
+                'last_name' => 'N7Geeks',
+                'email' => 'n7geeks@gmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
+            ], [
+                'first_name' => 'Enactus',
+                'last_name' => 'Enactus',
+                'email' => 'enactus@gmail.com',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'remember_token' => Str::random(10),
@@ -35,10 +43,10 @@ class UserSeeder extends Seeder
         ]);
 
         User::find(1)->roles()->attach(Role::findByName( 'admin'));
+        Tenant::findByDomain("admin")->users()->save(User::find(1));
         User::find(2)->roles()->attach(Role::findByName( 'president'));
-
-        factory(User::class, 20)->create()->each(function (User $user) {
-            $user->roles()->attach(Role::findByName( 'president'));
-        });
+        Tenant::findByDomain("n7geeks")->users()->save(User::find(2));
+        User::find(3)->roles()->attach(Role::findByName( 'president'));
+        Tenant::findByDomain("enactus")->users()->save(User::find(3));
     }
 }

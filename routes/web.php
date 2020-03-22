@@ -11,14 +11,22 @@
 |
 */
 
+// Subdomains
+Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))->group(function () {
+    Route::group(['middleware' => ['tenant.auth']], function () {
+        Route::get('/admin', function ($subdomain) {
+            return "auth" . $subdomain;
+        });
+    });
 
-
-Route::domain('{subdomain}.' . env('APP_DOMAIN'))->group(function () {
-    Route::get('/', function ($subdomain) {
-        return $subdomain;
+    Route::group(['middleware' => ['tenant.guest']], function () {
+        Route::get('/', function ($subdomain) {
+            return $subdomain;
+        });
     });
 });
 
+// Main domain
 Route::get('/', function () {
     return view('welcome');
 });
