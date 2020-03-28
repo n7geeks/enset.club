@@ -12,21 +12,30 @@
 */
 
 // Subdomains
-Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))->group(function () {
-    Route::group(['middleware' => ['tenant.auth']], function () {
-        Route::get('/admin', function ($subdomain) {
-            return "auth" . $subdomain;
-        });
-    });
 
-    Route::group(['middleware' => ['tenant.guest']], function () {
-        Route::get('/', function ($subdomain) {
-            return $subdomain;
+auth()->loginUsingId(1);
+Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))
+    ->as('dm.')
+    ->middleware(['handle.subdomain'])
+    ->group(function () {
+        Route::prefix('admin')->as('admin.')->middleware(['tenant.auth'])->group(function () {
+            Route::get('/', function ($subdomain) {
+                return view('dashboard.homepage');
+            })->name('home');
+
+            Route::resource('posts', PostsController::class);
+        });
+
+        Route::as('guest.')->middleware(['tenant.guest'])->group(function () {
+            Route::get('/', function ($subdomain) {
+                return $subdomain;
+            })->name('home');
         });
     });
-});
 
 // Main domain
-Route::get('/', function () {
-    return view('welcome');
+Route::as('guest.')->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
 });
