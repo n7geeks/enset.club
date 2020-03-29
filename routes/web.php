@@ -11,9 +11,16 @@
 |
 */
 
-// Subdomains
+// Auth
+Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))
+    ->middleware(['handle.subdomain'])
+    ->group(function () {
+        Route::prefix('admin')->group(function () {
+            Auth::routes(['register' => false]);
+        });
+    });
 
-auth()->loginUsingId(1);
+// Subdomains
 Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))
     ->as('dm.')
     ->middleware(['handle.subdomain'])
