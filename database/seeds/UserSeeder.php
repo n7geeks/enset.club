@@ -5,7 +5,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use RomegaDigital\Multitenancy\Models\Tenant;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -42,11 +41,8 @@ class UserSeeder extends Seeder
             ],
         ]);
 
-        User::find(1)->roles()->attach(Role::findByName( 'admin'));
-        Tenant::findByDomain("admin")->users()->save(User::find(1));
-        User::find(2)->roles()->attach(Role::findByName( 'president'));
-        Tenant::findByDomain("n7geeks")->users()->save(User::find(2));
-        User::find(3)->roles()->attach(Role::findByName( 'president'));
-        Tenant::findByDomain("enactus")->users()->save(User::find(3));
+        User::find(1)->roles()->attach(Role::findByName('admin'));
+        User::find(2)->roles()->attach(Role::findByName('president'));
+        User::find(3)->roles()->attach(Role::findByName('president'));
     }
 }

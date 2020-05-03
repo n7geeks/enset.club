@@ -17,16 +17,27 @@ class CreateTenantsTable extends Migration
 
         Schema::create($tableNames['tenants'], function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->unsignedBigInteger('president_id');
+
             $table->string('name')->unique();
+            $table->string('slogan')->nullable();
+            $table->text('description');
+            $table->string('logo');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('domain')->unique();
+
+            $table->foreign('president_id')->references('id')->on('users');
+
             $table->timestamps();
         });
 
         Schema::create($tableNames['tenant_user'], function (Blueprint $table) use ($tableNames) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('tenant_id');
-            $table->foreign('tenant_id')
+            $table->unsignedBigInteger('club_id');
+            $table->foreign('club_id')
                 ->references('id')
                 ->on($tableNames['tenants'])
                 ->onDelete('cascade');
@@ -54,7 +65,7 @@ class CreateTenantsTable extends Migration
             $table->dropForeign(['tenant_id']);
             $table->dropForeign(['user_id']);
         });
-        
+
         Schema::dropIfExists($tableNames['tenants']);
         Schema::dropIfExists($tableNames['tenant_user']);
     }

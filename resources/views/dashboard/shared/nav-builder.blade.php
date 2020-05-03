@@ -21,6 +21,13 @@
     </li>
 
     <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link {{ request()->routeIs("dm.admin.clubs.*") ? "c-active" : "" }}" href="{{ route("dm.admin.clubs.index") }}">
+            <i class="cil-library-building c-sidebar-nav-icon"></i>
+            Clubs
+        </a>
+    </li>
+
+    <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link {{ request()->routeIs("dm.admin.posts.*") ? "c-active" : "" }}" href="{{ route("dm.admin.posts.index") }}">
             <i class="cil-pencil c-sidebar-nav-icon"></i>
             Posts

@@ -30,6 +30,7 @@ Route::domain('{subdomain}.' . env('MULTITENANCY_BASE_URL'))
                 return view('dashboard.homepage');
             })->name('home');
 
+            Route::resource('clubs', ClubController::class);
             Route::resource('posts', PostsController::class);
         });
 
