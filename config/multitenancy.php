@@ -53,7 +53,7 @@ return [
     | the RomegaDigital\Multitenancy\Contracts\Tenant contract.
     */
 
-    'tenant_model' => \RomegaDigital\Multitenancy\Models\Tenant::class,
+    'tenant_model' => \App\Club::class,
 
     'table_names' => [
         /*
@@ -66,13 +66,13 @@ return [
          * If overwriting `tenant_model`, you may also wish to define a new table
          */
 
-        'tenants' => 'tenants',
+        'tenants' => 'clubs',
 
         /*
          * Define the relationship table for the belongsToMany relationship
          */
 
-        'tenant_user' => 'tenant_user',
+        'tenant_user' => 'club_user',
     ],
 
     /*

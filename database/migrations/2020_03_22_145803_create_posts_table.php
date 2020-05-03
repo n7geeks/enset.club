@@ -24,7 +24,7 @@ class CreatePostsTable extends Migration
 
             $table->foreign('tenant_id')
                 ->references('id')
-                ->on("tenants")
+                ->on("clubs")
                 ->onDelete('cascade');
         });
     }

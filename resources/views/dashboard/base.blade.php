@@ -59,8 +59,31 @@
     <div class="c-body">
 
         <main class="c-main">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if(session()->has('success'))
+                                <div class="alert alert-success alert-dismissible show" role="alert">
+                                    <strong>Success!</strong> {{ session('success') }}
+                                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                </div>
+                            @endif
 
-            @yield('content')
+                            @if(session()->has('error'))
+                                <div class="alert alert-danger alert-dismissible show" role="alert">
+                                    <strong>Error!</strong> {{ session('error') }}
+                                    <button class="close" type="button" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                </div>
+                            @endif
+
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
     </div>
